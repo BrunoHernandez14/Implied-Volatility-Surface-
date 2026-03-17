@@ -55,6 +55,33 @@ $$|b - a| < \delta \quad \text{or} \quad f(b) = 0$$
 
 ### The Greeks 
 Greek values measure the sensitivty of the options price to multiple factors 
-<img width="480" height="424" alt="image" src="https://github.com/user-attachments/assets/cc0b44d2-4d8a-4806-8e60-3f979de1dfa2" />
+![Alt text](IVGreeks.png)
 
 ### Delta 
+How much the option price moves for $1 move in the underlying asset(usually stock)
+
+$$\Delta_{call} = N(d_1)$$
+$$\Delta_{put} = N(d_1) - 1$$
+
+### Gamma 
+How much delta moves for $1 movement of stock, the acceleration to the velocity(delta)
+
+$$\Gamma = \frac{N'(d_1)}{S_0 \sigma \sqrt{T}}$$
+
+### Vega 
+Sentivity to a 1% change in IV
+
+$$\nu = S_0 \sqrt{T} N'(d_1)$$
+
+### Theta 
+Value lost per day from time passing
+Comprised of theta decay(1st part), rate cost(second part), and dividend benefit(third part)
+
+$$\Theta_{call} = -\frac{S_0 N'(d_1) \sigma}{2\sqrt{T}} - rKe^{-rT}N(d_2)$$
+$$\Theta_{put} = -\frac{S_0 N'(d_1) \sigma}{2\sqrt{T}} + rKe^{-rT}N(-d_2)$$
+
+### Rho
+How much option price changes for 1% move on risk free rate 
+
+$$\rho_{call} = KTe^{-rT}N(d_2)$$
+$$\rho_{put} = -KTe^{-rT}N(-d_2)$$
