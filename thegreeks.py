@@ -48,7 +48,7 @@ def rho(S, K, T, r, sigma, q, option_type):
         return -K * T * np.exp(-r * T) * norm.cdf(-d2_value)
     
 #Computes all the greeks 
-def compute_greeks(df, r, option_type="Call"):
+def compute_greeks(df, r, option_type):
     df = df.copy()
     df['delta'] = df.apply(lambda row: delta(row['S'], row['K'], row['T'], r, row['iv'], row['q'], option_type), axis=1)
     df['gamma'] = df.apply(lambda row: gamma(row['S'], row['K'], row['T'], r, row['iv'], row['q']), axis=1)
