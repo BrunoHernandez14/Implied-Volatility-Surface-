@@ -17,7 +17,7 @@ st.sidebar.header("Parameters")
 ticker_symbol = st.sidebar.text_input("Ticker Symbol", value="SPY").upper()
 risk_free_rate = st.sidebar.number_input("Risk-Free Rate",  value=0.05, step=0.01, format="%.3f")
 dividend_yield = st.sidebar.number_input("Dividend Yield",  value=0.02, step=0.01, format="%.3f")
-option_type = st.sidebar.selectbox("Option Type", ["Call", "Put"])
+option_type = st.sidebar.selectbox("Option Type", ["Call", "Put"], index=0)
 
 try:
     history = yf.Ticker(ticker_symbol).history(period="1d")

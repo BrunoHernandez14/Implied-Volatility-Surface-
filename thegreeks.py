@@ -23,30 +23,33 @@ def gamma(S, K, T, r, sigma, q):
 #Below will calculate Vega for the given option
 def vega(S, K, T, r, sigma, q):
     d1_value = d1(S, T, K, r, q, sigma)
-    return S * np.exp(-q * T) * norm.pdf(d1_value) * np.sqrt(T)
+    raw_vega = S * np.exp(-q * T) * norm.pdf(d1_value) * np.sqrt(T)
+    return raw_vega / 100  # Return Vega per 1% change in volatility
 
 #Below will calculate Theta for the given option
 def theta(S, K, T, r, sigma, q, option_type):
     d1_value = d1(S, T, K, r, q, sigma)
     d2_value = d2(d1_value, sigma, T)
     if option_type == "Call":
-        return (-S * np.exp(-q * T) * norm.pdf(d1_value) * sigma / (2 * np.sqrt(T)) 
+        raw_theta =  (-S * np.exp(-q * T) * norm.pdf(d1_value) * sigma / (2 * np.sqrt(T)) 
                 - r * K * np.exp(-r * T) * norm.cdf(d2_value) 
                 + q * S * np.exp(-q * T) * norm.cdf(d1_value))
     elif option_type == "Put":
-        return (-S * np.exp(-q * T) * norm.pdf(d1_value) * sigma / (2 * np.sqrt(T)) 
+        raw_theta = (-S * np.exp(-q * T) * norm.pdf(d1_value) * sigma / (2 * np.sqrt(T)) 
                 + r * K * np.exp(-r * T) * norm.cdf(-d2_value) 
                 - q * S * np.exp(-q * T) * norm.cdf(-d1_value))
+    return raw_theta / 365  # Return Theta per day
 
 #Below will calculate Rho for the given option
 def rho(S, K, T, r, sigma, q, option_type):
     d1_value = d1(S, T, K, r, q, sigma)
     d2_value = d2(d1_value, sigma, T)
     if option_type == "Call":
-        return K * T * np.exp(-r * T) * norm.cdf(d2_value)
+        raw_rho = K * T * np.exp(-r * T) * norm.cdf(d2_value)
     elif option_type == "Put":
-        return -K * T * np.exp(-r * T) * norm.cdf(-d2_value)
-    
+        raw_rho = -K * T * np.exp(-r * T) * norm.cdf(-d2_value)
+    return raw_rho / 100  # Return Rho per 1% change in risk-free rate
+
 #Computes all the greeks 
 def compute_greeks(df, r, option_type):
     df = df.copy()
